@@ -51,37 +51,28 @@ public class TestArray {
 }
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-class Animal {
-    // Some properties and methods common to all animals
-}
-
-class Cage<T extends Animal> {
-    private List<? super T> animals;
-
-    public Cage() {
-        this.animals = new ArrayList<>();
-    }
-
-    public void addAnimal(T animal) {
-        animals.add(animal);
-    }
-
-    public void displayAnimals() {
-        for (Object animal : animals) {
-            System.out.println(animal);
-        }
-    }
-}
+import java.lang.reflect.Method;
 
 public class Main {
-    public static void main(String[] args) {
-        Cage<Animal> animalCage = new Cage<>();
-        animalCage.addAnimal(new Animal());
-        animalCage.addAnimal(new Animal());
-        animalCage.displayAnimals();
+    public static void main(String[] args) throws Exception {
+        ExampleClass instance = new ExampleClass();
+        Class<?> clazz = ExampleClass.class;
+
+        // Get the method object
+        Method method = clazz.getDeclaredMethod("privateMethod");
+
+        // Make the method accessible
+        method.setAccessible(true);
+
+        // Invoke the private method
+        method.invoke(instance);
     }
 }
+
+class ExampleClass {
+    private void privateMethod() {
+        System.out.println("Private method invoked!");
+    }
+}
+
 
